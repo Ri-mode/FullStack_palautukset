@@ -1,5 +1,14 @@
 import React, { useState } from 'react'
 
+const StatisticLine = (props) => {
+
+  return (
+    <div>
+      {props.text} {props.value}
+    </div>
+  )
+}
+
 const Statistics = (props) => {
   const sum = props.good + props.neutral + props.bad
   if (sum === 0) {
@@ -13,12 +22,12 @@ const Statistics = (props) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <p>Good {props.good}</p>
-      <p>Neutral {props.neutral}</p>
-      <p>Bad {props.bad}</p>
-      <p>All {sum}</p>
-      <p>Average {(props.good - props.bad) / (sum)}</p>
-      <p>Positive {props.good / (sum) * 100} %</p>
+      <StatisticLine text="Good" value={props.good} />
+      <StatisticLine text="Neutral" value={props.neutral} />
+      <StatisticLine text="Bad" value={props.bad} />
+      <StatisticLine text="All" value={sum} />
+      <StatisticLine text="Average" value={(props.good - props.bad) / (sum)} />
+      <StatisticLine text="Positive" value={(props.good / (sum) * 100) + " %"} />
     </div>
   )
 }
