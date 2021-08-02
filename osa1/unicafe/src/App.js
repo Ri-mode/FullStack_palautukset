@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
 
-const StatisticLine = (props) => {
-
-  return (
-    <div>
-      {props.text} {props.value}
-    </div>
-  )
-}
-
 const Statistics = (props) => {
   const sum = props.good + props.neutral + props.bad
   if (sum === 0) {
@@ -22,12 +13,34 @@ const Statistics = (props) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <StatisticLine text="Good" value={props.good} />
-      <StatisticLine text="Neutral" value={props.neutral} />
-      <StatisticLine text="Bad" value={props.bad} />
-      <StatisticLine text="All" value={sum} />
-      <StatisticLine text="Average" value={(props.good - props.bad) / (sum)} />
-      <StatisticLine text="Positive" value={(props.good / (sum) * 100) + " %"} />
+      <table>
+        <tbody>
+          <tr>
+            <td>Good</td>
+            <td>{props.good}</td>
+          </tr>
+          <tr>
+            <td>Neutral</td>
+            <td>{props.neutral}</td>
+          </tr>
+          <tr>
+            <td>Bad</td>
+            <td>{props.bad}</td>
+          </tr>
+          <tr>
+            <td>All</td>
+            <td>{sum}</td>
+          </tr>
+          <tr>
+            <td>Average</td>
+            <td>{(props.good - props.bad) / (sum)}</td>
+          </tr>
+          <tr>
+            <td>Positive</td>
+            <td>{(props.good / (sum) * 100) + " %"}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }
