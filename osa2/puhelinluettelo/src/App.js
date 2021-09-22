@@ -10,13 +10,24 @@ const App = () => {
 
   const addNumber = (event) => {
     event.preventDefault()
-    const numberObject = {
-      name: newName,
-      id: persons.length + 1,
+    let alreadyName = false
+    for (let i = 0; i < persons.length; i++) {
+      if (persons[i].name === newName) {
+        alreadyName = true
+        break
+      }
     }
-    setPersons(persons.concat(numberObject))
+    if (alreadyName) {
+      window.alert(newName + ' is already added to phonebook')
+    } else {
+      const numberObject = {
+        name: newName,
+        id: persons.length + 1,
+      }
+      setPersons(persons.concat(numberObject))
+      console.log('Number added', event.target)
+    }  
     setNewName('')
-    console.log('Number added', event.target)
   }
 
   const handleNumberChange = (event) => {
@@ -48,7 +59,7 @@ const App = () => {
         )}
       </div>
 
-      <div>debug: {newName}</div>
+      {/*<div>debug: {newName}</div> */}
     </div>
   )
 
