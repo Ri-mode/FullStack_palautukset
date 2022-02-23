@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from "./components/Filter"
 import Persons from "./components/Persons"
 import PersonForm from "./components/PersonForm"
+import personService from './services/persons'
 
 
 const App = () => {
@@ -12,12 +12,10 @@ const App = () => {
   const [ filterName, setFilterName ] = useState('')
 
   const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('ṕromise fulfilled')
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }
 
@@ -40,12 +38,12 @@ const App = () => {
         number: newNumber,
         id: persons.length + 1,
       }
-      //setPersons(persons.concat(numberObject))
-      axios
-        .post('http://localhost:3001/persons', numberObject)
-        .then(response => {
-          setPersons(persons.concat(response.data))
+      personService
+        .create(numberObject)
+        .then(returnedNumber => {
+          setPersons(persons.concat(returnedNumber))
         })
+      
       console.log('Number added', event.target)
     }  
     setNewName('')
