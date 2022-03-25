@@ -8,6 +8,31 @@ interface ExerciseFeedback {
   average: number;
 }
 
+interface ExerciseData {
+  hourTarget: number;
+  daysData: Array<number>;
+}
+
+const parseDays = (args: Array<string>): ExerciseData => {
+  let days: Array<number> = [];
+  //console.log("testi", args);
+  if (args.length < 4) throw new Error('Not enough arguments!');
+
+  for (let i = 3; i < args.length; i++) {
+    if (isNaN(Number(args[i]))) throw new Error('Provided values were not numbers!');
+    days = days.concat(Number(args[i]));
+  }
+
+  if (!isNaN(Number(args[2]))) {
+    return {
+      hourTarget: Number(args[2]),
+      daysData: days
+    }
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+}
+
 
 const calculateExercise = (days: Array<number>, target: number): ExerciseFeedback => {
   const initialValue: number = 0;
@@ -42,6 +67,14 @@ const calculateExercise = (days: Array<number>, target: number): ExerciseFeedbac
   }
 }
 
-const days: Array<number> = [3, 0, 2, 4.5, 4, 3, 1];
 
-console.log(calculateExercise(days, 2));
+try {
+  const { hourTarget, daysData } = parseDays(process.argv);
+  console.log('Onnistuu', calculateExercise(daysData, hourTarget));
+} catch (error: unknown) {
+  let errorMessage = 'Something bad happened.';
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
+  }
+  console.log(errorMessage);
+}
