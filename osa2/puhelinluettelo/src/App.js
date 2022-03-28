@@ -51,7 +51,7 @@ const App = () => {
   }
 
   const handleNameChange = (event) => {
-    console.log('Tekstiä', event.target.value)
+    console.log('Nimi', event.target.value)
     setNewName(event.target.value)
   }
 

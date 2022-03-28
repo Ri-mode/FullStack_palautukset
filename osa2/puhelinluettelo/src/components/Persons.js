@@ -1,10 +1,11 @@
 import React from "react"
 
 const Persons = ({ persons, filterName }) => {
+  
   return (
     <div>
       {persons
-        .filter(person => person.name.toLowerCase().includes(filterName))
+        .filter(person => person.name.toLowerCase().includes(filterName.toLowerCase()))
         .map(person =>
           <div key={person.id}>
            {person.name} {person.number}
