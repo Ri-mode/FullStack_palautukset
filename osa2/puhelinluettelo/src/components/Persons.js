@@ -1,6 +1,6 @@
 import React from "react"
 
-const Persons = ({ persons, filterName }) => {
+const Persons = ({ persons, filterName, deletePerson }) => {
   
   return (
     <div>
@@ -8,7 +8,7 @@ const Persons = ({ persons, filterName }) => {
         .filter(person => person.name.toLowerCase().includes(filterName.toLowerCase()))
         .map(person =>
           <div key={person.id}>
-           {person.name} {person.number}
+           {person.name} {person.number} <button onClick = {() => deletePerson(person.id)}>delete</button>
         </div>
         )
       }

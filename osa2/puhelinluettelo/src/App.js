@@ -50,6 +50,17 @@ const App = () => {
     setNewNumber('')
   }
 
+  const deletePerson = (id) => {
+    const personToDelete = persons.find(person => person.id === id)
+    console.log('toDelete', personToDelete.id)
+
+    if(window.confirm(`Delete ${personToDelete.name}?`)) {
+      personService
+        .remove(personToDelete.id)
+        .then(() => setPersons(persons.filter(person => person.id !== personToDelete.id)))
+    }
+  }
+
   const handleNameChange = (event) => {
     console.log('Nimi', event.target.value)
     setNewName(event.target.value)
@@ -84,7 +95,7 @@ const App = () => {
       
       <h3>Numbers</h3>
 
-      <Persons persons={persons} filterName={filterName}/>
+      <Persons persons={persons} filterName={filterName} deletePerson={deletePerson} />
       
       {/*<div>debug: {newName}</div> */}
     </div>
