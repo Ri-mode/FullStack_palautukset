@@ -36,11 +36,12 @@ const App = () => {
       const numberObject = {
         name: newName,
         number: newNumber,
-        id: persons.length + 1,
+        //id: persons.length + 1,
       }
       personService
         .create(numberObject)
         .then(returnedNumber => {
+          console.log('returned', returnedNumber)
           setPersons(persons.concat(returnedNumber))
         })
       
