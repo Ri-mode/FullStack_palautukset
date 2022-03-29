@@ -31,12 +31,24 @@ const App = () => {
       }
     }
     if (alreadyName) {
-      window.alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        console.log('Vaihda numero', newName)
+        const changeNumber = persons.find(person => person.name === newName)
+        const numberChanged = { ...changeNumber, number: newNumber }
+
+        personService
+          .update(numberChanged.id, numberChanged)
+          .then(() => personService
+            .getAll()
+            .then(updatedPersons => {
+              setPersons(updatedPersons)
+            }))
+      }
+      //window.alert(`${newName} is already added to phonebook`)
     } else {
       const numberObject = {
         name: newName,
         number: newNumber,
-        //id: persons.length + 1,
       }
       personService
         .create(numberObject)
