@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Filter from "./components/Filter"
 import Persons from "./components/Persons"
 import PersonForm from "./components/PersonForm"
+import Notification from "./components/Notification"
 import personService from './services/persons'
 
 
 const App = () => {
-  const [ persons, setPersons] = useState([]) 
+  const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterName, setFilterName ] = useState('')
+  const [ errorMessage, setErrorMessage ] = useState('Help')//null)
 
   const hook = () => {
     personService
@@ -42,7 +44,14 @@ const App = () => {
             .getAll()
             .then(updatedPersons => {
               setPersons(updatedPersons)
-            }))
+            })
+          )
+          .then(() => {
+            setErrorMessage(`Updated ${newName}`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 2500)
+          })
       }
       //window.alert(`${newName} is already added to phonebook`)
     } else {
@@ -55,6 +64,12 @@ const App = () => {
         .then(returnedNumber => {
           console.log('returned', returnedNumber)
           setPersons(persons.concat(returnedNumber))
+        })
+        .then(() => {
+          setErrorMessage(`Added ${newName}`          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2500)
         })
       
       console.log('Number added', event.target)
@@ -71,6 +86,12 @@ const App = () => {
       personService
         .remove(personToDelete.id)
         .then(() => setPersons(persons.filter(person => person.id !== personToDelete.id)))
+        .then(() => {
+          setErrorMessage(`Removed ${personToDelete.name}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2500)
+        })
     }
   }
 
@@ -92,6 +113,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter 
         filterName={filterName}
         handleFilterChange={handleFilterChange}
