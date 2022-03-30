@@ -11,7 +11,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterName, setFilterName ] = useState('')
-  const [ errorMessage, setErrorMessage ] = useState('Help')//null)
+  const [ errorMessage, setErrorMessage ] = useState(null)
 
   const hook = () => {
     personService
